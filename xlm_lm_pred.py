@@ -4,7 +4,7 @@ import json
 from mlx_lm import load, generate
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model_path", "-m", required=True, help="Path to the model", default='Qwen/Qwen2.5-0.5B-Instruct')
+parser.add_argument("--model", "-m", required=True, help="Path to the model", default='Qwen/Qwen2.5-0.5B-Instruct')
 parser.add_argument("--input", "-i", required=True, help="path to the input data")
 parser.add_argument("--output", "-o", required=True, help="path to the output file")
 parser.add_argument("--format", "-f", required=False, help="data format of the input data", default="chat", choices=["chat", "completion"])
@@ -46,7 +46,7 @@ def predict_completion(model, tokenizer, prompts):
 
 
 def main():
-    model_path: str = args.model_path
+    model_path: str = args.model
     model, tokenizer = load(model_path, tokenizer_config={"eos_token": "<|im_end|>"})
     
     output_dir: str = os.path.dirname(args.output)

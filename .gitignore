@@ -12,6 +12,7 @@ model/*
 !model/README.md
 
 output/*
+!output/README.md
 
 old_codes/*
 
