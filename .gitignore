@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+
+
+data/*
+!data/README.md
+
+model/*
+!model/README.md
+
+output/*
+
+*.json
+*.jsonl
+
+*.safetensors
+
+*.ipynb
