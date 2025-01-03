@@ -13,6 +13,8 @@ model/*
 
 output/*
 
+old_codes/*
+
 *.json
 *.jsonl
 
