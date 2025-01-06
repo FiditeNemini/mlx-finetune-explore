@@ -20,6 +20,7 @@ deployment/*
 !deployment/generate_output.py
 !deployment/output.json
 !deployment/README.md
+!deployment/test.Modelfile
 
 *.json
 *.jsonl

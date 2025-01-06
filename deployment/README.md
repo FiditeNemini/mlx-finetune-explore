@@ -35,12 +35,13 @@ TEMPLATE "[INST] {{ .Prompt }} [/INST]"
 ```
 2. Create the model using:
 ```bash
-ollama create example -f Modelfile
+ollama create gguf-example -f test.Modelfile
 ```
 3. Run the model
+```bash
+ollama run gguf-example:latest
 ```
-ollama run example "how are you?"
-```
+
 
 #### 3. Genrate output for test set.
 Test set format:
