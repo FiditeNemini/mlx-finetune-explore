@@ -23,7 +23,7 @@ After compiling, check whether `llama-cli` and `llama-quantize` exist in `build/
 
 Conversion to `gguf`:
 ```bash
-python  convert_hf_to_gguf.py  input-model-path --outtype f16 --outfile  output-model-path.gguf
+python convert_hf_to_gguf.py input-model-path --outtype f16 --outfile output-model-path.gguf
 ```   
 
 #### 2. deploy using ollama
