@@ -55,12 +55,9 @@ python data_prep.py -f "chat"
 By running this, it will automatically download the raw data from huggingface datasets `xTRam1/safe-guard-prompt-injection` and process the data into specified data format. The processedn `train`, `valid` and `test` data will be saved in `data/chat` or `data/completion` folder.
 
 #### 3. Fine-tuning.
-First, we should install some dependencies:
+First, we should install the dependencies:
 ```bash
-pip install mlx-lm
-pip install transformers
-pip install torch
-pip install numpy
+pip install -r requirements.txt
 ```
 Second, directly use Apple's MLX framework for fine-tuning, specifying the original model and the dataset data directory.
 ```bash
