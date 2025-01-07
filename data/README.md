@@ -1,7 +1,6 @@
 Data folder.
 
-`./raw ` for raw data.
-`./processed` for processed data.
+`./processed` for processed data. Updated code won't generate this path.
 
 Then, we should divide the process data into `train`, `valid` and `test` based on the need.
 

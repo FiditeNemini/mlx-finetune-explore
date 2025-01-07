@@ -1,0 +1,6 @@
+pandas
+argparse
+mlx-lm
+transformers
+torch
+numpy

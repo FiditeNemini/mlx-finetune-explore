@@ -1,13 +1,17 @@
 import os
 import argparse
 import json
+import pandas as pd
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--input", "-i", required=True, help="path to the input data")
-parser.add_argument("--output", "-o", required=True, help="path to the output file")
 parser.add_argument("--format", "-f", required=False, help="data format of the processed data", default="chat", choices=["chat", "completion"])
-
 args = parser.parse_args()
+
+# load data
+splits = {'train': 'data/train-00000-of-00001.parquet', 'test': 'data/test-00000-of-00001.parquet'}
+train_df = pd.read_parquet("hf://datasets/xTRam1/safe-guard-prompt-injection/" + splits["train"])
+test_df =  pd.read_parquet("hf://datasets/xTRam1/safe-guard-prompt-injection/" + splits["test"])
+
 
 def filter_data(data):
     ### avoid long sentence
@@ -39,25 +43,32 @@ def convert_completion(data):
         }
     modified_data.append(new_item)
     return modified_data
-    
-def main():
-    output_dir: str = os.path.dirname(args.output)
+
+def process_and_save(data, filename):
+    filtered_data = filter_data(data)
+    if args.format == "chat":
+        converted_data = convert_chat(filtered_data)
+    else:  # "completion" mode
+        converted_data = convert_completion(filtered_data)
+        
+    output_dir = f"data/{args.format}"
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-        
-    input_data: list
-    with open(args.input, "r") as in_file:
-        input_data = json.load(in_file)
-    
-    filtered_data: list = filter_data(input_data)
-    if args.format == "chat":
-        converted_data: list = convert_chat(filtered_data)
-    else: # "completion" mode
-        converted_data: list = convert_completion(filtered_data)
 
-    with open(args.output, 'w', encoding='utf-8') as f:
+    output_path = os.path.join(output_dir, filename)
+    with open(output_path, 'w', encoding='utf-8') as f:
         for entry in converted_data:
             f.write(json.dumps(entry) + '\n')
 
+def main():
+    train_records = filter_data(train_df.to_dict(orient='records'))
+    train_data = train_records[:7000]
+    valid_data = train_records[7000:]
+    test_data = filter_data(test_df.to_dict(orient='records'))
+    
+    process_and_save(train_data, "train.jsonl")
+    process_and_save(valid_data, "valid.jsonl")
+    process_and_save(test_data, "test.jsonl")
+    
 if __name__ == "__main__":
     main()
